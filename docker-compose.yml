@@ -95,6 +95,22 @@ services:
     profiles:
       - develop
 
+  ganache:
+    image: ghcr.io/foundry-rs/foundry
+    ports:
+      - "8545:8545"
+
+    entrypoint: ["anvil"]
+    env_file:
+        - .env
+    command:
+      - "--host=0.0.0.0"
+      - "--chain-id=1337"
+      - "--fork-url=${FORK_URL}"
+      - "--block-time=2"
+      - "--gas-limit=30000000"
+    profiles:
+      - develop
   flower:
     <<: *worker
     command: docker/web/celery/flower/run.sh
